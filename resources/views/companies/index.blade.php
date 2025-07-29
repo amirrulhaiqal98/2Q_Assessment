@@ -39,12 +39,12 @@
                         </a>
                     </td>
                     <td>
-                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST">
+                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST" class="delete-form" data-company-name="{{ $company->name }}">
                             <a class="btn btn-info btn-sm" href="{{ route('companies.show', $company->id) }}">Show</a>
                             <a class="btn btn-primary btn-sm" href="{{ route('companies.edit', $company->id) }}">Edit</a>
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -61,26 +61,46 @@
 @endsection
 
 @push('scripts')
-    @if(session('success'))
-    <script>
+<script>
     document.addEventListener('DOMContentLoaded', function () {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
+        // Success Toast
+        @if(session('success'))
+            Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                }
+            }).fire({
+                icon: 'success',
+                title: @json(session('success'))
+            });
+        @endif
 
-        Toast.fire({
-            icon: "success",
-            title: @json(session('success'))
+        // Delete Confirmation
+        document.querySelectorAll('.delete-form').forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const companyName = this.getAttribute('data-company-name');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: `You are about to delete ${companyName}. You won't be able to revert this!`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                })
+            });
         });
     });
-    </script>
-    @endif
+</script>
 @endpush
