@@ -45,15 +45,21 @@ Install the PHP and JavaScript dependencies using Composer and NPM.
 ```bash
 composer install
 npm install
-npm run build
+npm run build # Compiles front-end assets for authentication pages
 ```
 
 ### 4. Environment Configuration
 
 Create a copy of the `.env.example` file and name it `.env`. This file will hold your application's environment-specific settings.
 
+For Windows:
 ```bash
 copy .env.example .env
+```
+
+For macOS / Linux:
+```bash
+cp .env.example .env
 ```
 
 Next, open the `.env` file and configure your database connection.
