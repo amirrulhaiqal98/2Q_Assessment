@@ -12,10 +12,10 @@ A simple Laravel-based application for managing company information, including C
 
 ## Technology Stack
 
--   **Backend**: PHP 8.1 / Laravel 11
--   **Frontend**: HTML5, Bootstrap 5
--   **JavaScript**: Vanilla JS, SweetAlert2
--   **Database**: MySQL (or any Laravel-supported database)
+-   **Backend**: PHP 8.2 / Laravel 12
+-   **Frontend**: Bootstrap 5, Blade
+-   **JavaScript**: SweetAlert2
+-   **Database**: MySQL (or your preferred database)
 -   **Development Environment**: Laragon (recommended) or any other environment that supports the stack.
 
 ## Local Development Setup
@@ -24,7 +24,7 @@ Follow these instructions to set up the project on your local machine for develo
 
 ### 1. Prerequisites
 
--   PHP >= 8.1
+-   PHP >= 8.2
 -   Composer
 -   Node.js & NPM
 -   A local database server (e.g., MySQL, MariaDB)
@@ -83,7 +83,15 @@ Set up the database schema by running the migrations. This will create all the n
 php artisan migrate
 ```
 
-### 7. Create a Symbolic Link
+### 7. Seed the Database
+
+Run the database seeder to populate the database with an initial user and other sample data.
+
+```bash
+php artisan db:seed --class=AdminUserSeeder
+```
+
+### 8. Create a Symbolic Link
 
 To ensure that uploaded logos are publicly accessible, create a symbolic link from `public/storage` to `storage/app/public`.
 
@@ -91,7 +99,7 @@ To ensure that uploaded logos are publicly accessible, create a symbolic link fr
 php artisan storage:link
 ```
 
-### 8. Run the Application
+### 9. Run the Application
 
 You are now ready to run the application. Use the following Artisan command to start the local development server:
 
@@ -104,7 +112,7 @@ The application will be available at `http://127.0.0.1:8000`.
 ## Usage
 
 -   **Login**: Navigate to `http://127.0.0.1:8000/login` to access the login page.
--   **Default Credentials**: You can register a new user or use the following default credentials if you have seeded the database:
-    -   **Email**: `user@example.com`
+-   **Default Credentials**: After running the seeder, you can log in with the following credentials:
+    -   **Email**: `admin@admin.com`
     -   **Password**: `password`
 -   **Companies Dashboard**: After logging in, you will be redirected to the companies dashboard where you can manage company records.
