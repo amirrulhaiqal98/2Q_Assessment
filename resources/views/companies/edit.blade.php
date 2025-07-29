@@ -8,6 +8,15 @@
 </head>
 <body>
     <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col-12 text-end">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-secondary">Logout</button>
+                </form>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
